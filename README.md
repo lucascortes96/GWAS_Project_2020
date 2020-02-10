@@ -1,12 +1,12 @@
 # GATK Variant Discovery Pipeline for Stickleback Genomics Project 2019-2020
 
 
-## Fix for header issue using SED COMMAND (you can see this in the header of
+## Fix for header issue using SED command (you can see this in the header of
 ## each BAM file)
 for filename in *.vcf/bam; do name=$(ls $filename | cut -d"_" -f1,2) ;
   echo sed -ie \"s/FORMAT\\t20/FORMAT\\t$name/g\" $filename; done
 
-##  Use sambamba on the bam files 
+##  Use sambamba on the BAM files 
 
 for Filename in *trimmedaligned.bam; do name=`ls $Filename | cut -d"." -f1`
   ~programs/sambamba-0.6.8
