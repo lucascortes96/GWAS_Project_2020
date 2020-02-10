@@ -1,33 +1,25 @@
 # GATK Variant Discovery Pipeline for Stickleback Genomics Project 2019-2020
 
 
-
-#Lucas Cortes 2019 germline short variant discovery (SNPs and indels) PIPELINE
- (justification for running all files together
- https://gatkforums.broadinstitute.org/gatk/discussion/8639/run-genotypegvcfs
- -by-populations-separately-or-all-populations-together)
-
-
-
-##Fix for header issue using SED COMMAND (you can see this in the header of
+## Fix for header issue using SED COMMAND (you can see this in the header of
 ## each BAM file)
 for filename in *.vcf/bam; do name=$(ls $filename | cut -d"_" -f1,2) ;
   echo sed -ie \"s/FORMAT\\t20/FORMAT\\t$name/g\" $filename; done
 
-##FIRST, DOWNLOAD sambamba
+##  Use sambamba on the bam files 
 
 for Filename in *trimmedaligned.bam; do name=`ls $Filename | cut -d"." -f1`
   ~programs/sambamba-0.6.8
   view -t 8 -h -f bam $Filename -o $name"_unique.bam" ;
 done
 
-## Mark Duplicates 
+## Mark Duplicates
 
 for Filename in *.bam; do name=`ls $Filename | cut -d"." -f1`
   ~/programs/sambamba-0.6.8  markdup -r -t 8 $Filename $name".DUPremoved.bam";
 done
 
-## VALIDATE BAM FILE 
+## Validate BAM files
 
 java -jar picard.jar ValidateSamFile I=AF_DUPremoved.bam MODE=SUMMARY
 
