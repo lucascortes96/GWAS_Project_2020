@@ -1,4 +1,4 @@
-# Creating files used to create PCA plote from PLINK 
+# Creating files used to create PCA plot from PLINK 
 
 
 # perform linkage pruning - i.e. identify prune sites. Use output files from variant calling 
